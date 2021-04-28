@@ -5,6 +5,8 @@ import matplotlib.pyplot as plt
 
 GAUSSIAN = 3
 GRADIENT = 3
+NON_MAXIMUM = 2
+HARRIS_K = 0.04
 
 def feature_detect(img):
     if img.ndim == 3:
@@ -18,14 +20,25 @@ def feature_detect(img):
     Syy = cv2.GaussianBlur(src=Iy*Iy, ksize=(GAUSSIAN, GAUSSIAN), sigmaX=0)
 
     M = np.array([[Sxx, Sxy], [Sxy, Syy]])
-    tmp = np.swapaxes(M, 0, 2)
-    tmp = np.swapaxes(tmp, 1, 3)
-    print(tmp[0, 0])
-    print(Sxx[0, 0])
-    print(Sxy[0, 0])
-    print(Syy[0, 0])
+    det = M[0, 0] * M[1, 1] - M[0, 1] * M[1, 0]
+    trace = H[0, 0] + H[1, 1]
+    
+    R = det - HARRIS_K * trace ** 2
+    threshold = sorted(R.flatten(), reverse =True)[int(R.flatten().shape[0]) / 4]
+    R[R < threshold] = 0
+    R = cv2.copyMakeBorder(R, NON_MAXIMUM, NON_MAXIMUM, NON_MAXIMUM, NON_MAXIMUM, cv2.BORDER_REFLECT)
 
-    print(M.shape)
+    features = []
+    for i in range(NON_MAXIMUM, R.shape[0]-NON_MAXIMUM):
+        for j in range(NON_MAXIMUM, R.shape[1]-NON_MAXIMUM):
+            window = R[i-NON_MAXIMUM:i+NON_MAXIMUM+1 : j-NON_MAXIMUM, j+NON_MAXIMUM+1]
+            max = np.max(R)
+            window[w < window] = 0
+            R[i-NON_MAXIMUM:i+NON_MAXIMUM+1 : j-NON_MAXIMUM, j+NON_MAXIMUM+1] = window
+            features.append([i-NON_MAXIMUM, j-NON_MAXIMUM, max])
+    R = R[NON_MAXIMUM:-NON_MAXIMUM, NON_MAXIMUM:-NON_MAXIMUM]
+
+    
 
 
 if __name__ == '__main__':
