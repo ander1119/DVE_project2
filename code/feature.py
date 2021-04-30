@@ -103,7 +103,12 @@ def draw_matches(img1, img2, coordinate):
 
 
 if __name__ == '__main__':
-    img1 = cv2.imread("test_data/denny/denny01.jpg")
-    img2 = cv2.imread("test_data/denny/denny02.jpg")
+    parser = argparse.ArgumentParser()
+    parser.add_argument('img1', type=str)
+    parser.add_argument('img2', type=str)
+    args = parser.parse_args()
+
+    img1 = cv2.imread(args.img1)
+    img2 = cv2.imread(args.img2)
     coordinate = feature_match(img1, img2)
     draw_matches(img1, img2, coordinate)
