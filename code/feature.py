@@ -101,6 +101,10 @@ def draw_matches(img1, img2, coordinate):
         plt.plot([y1, y2], [x1, x2], marker='o')
     plt.show()
 
+sharpen_kernel = np.array([[-1,-1,-1], [-1, 9,-1], [-1,-1,-1]])
+
+def sharpen(img):
+    return cv2.filter2D(img, -1, sharpen_kernel)
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
@@ -108,7 +112,8 @@ if __name__ == '__main__':
     parser.add_argument('img2', type=str)
     args = parser.parse_args()
 
-    img1 = cv2.imread(args.img1)
-    img2 = cv2.imread(args.img2)
+    img1 = sharpen(cv2.imread(args.img1))
+    img2 = sharpen(cv2.imread(args.img2))
+
     coordinate = feature_match(img1, img2)
     draw_matches(img1, img2, coordinate)

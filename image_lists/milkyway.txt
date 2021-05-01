@@ -1,0 +1,14 @@
+# test_data/milkyway/400x600/milkyway14.jpg 545.082
+# test_data/milkyway/400x600/milkyway13.jpg 545.171
+# test_data/milkyway/400x600/milkyway12.jpg 545.073
+# test_data/milkyway/400x600/milkyway11.jpg 544.797
+# test_data/milkyway/400x600/milkyway10.jpg 544.56
+# test_data/milkyway/400x600/milkyway09.jpg 544.169
+# test_data/milkyway/400x600/milkyway08.jpg 544.059
+# test_data/milkyway/400x600/milkyway07.jpg 543.449
+# test_data/milkyway/400x600/milkyway06.jpg 541.686
+test_data/milkyway/400x600/milkyway05.jpg 540.233
+test_data/milkyway/400x600/milkyway04.jpg 538.709
+test_data/milkyway/400x600/milkyway03.jpg 535.661
+test_data/milkyway/400x600/milkyway02.jpg 534.364
+test_data/milkyway/400x600/milkyway01.jpg 533.074

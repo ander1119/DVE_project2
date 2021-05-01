@@ -22,7 +22,7 @@ if __name__ == '__main__':
     for i in range(1, len(projected_images)):
         matched_pairs = feature.feature_match(projected_images[i], projected_images[i-1])
         offset = stitching.RANSEC(matched_pairs)
-        # print(f'Get offset {offset}')
+        print(f'Get offset {offset}')
         result_image = stitching.merge_two_image(projected_images[i], result_image, offset)
 
     cv2.imwrite(args.output_image, result_image)

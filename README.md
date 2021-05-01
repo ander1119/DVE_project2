@@ -1,4 +1,4 @@
-# VFX project 2
+# Digital Visual Effect, 2021 Spring
 ## Image stiching
 
 ### Usage
@@ -19,4 +19,10 @@ And run the program:
 
 ```
 $ python3 code/main.py list.txt output.jpg
+```
+
+Example
+
+```
+$ python3 code/main.py image_lists/parrington.txt output.jpg
 ```

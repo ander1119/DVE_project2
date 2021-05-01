@@ -12,9 +12,9 @@ def load_images(path):
                 continue
             l = l.split()
             if l:
-                print(f'Read {l[0]} with focal length {l[1]}')
                 images.append(cv2.imread(l[0]))
                 focal_length.append(float(l[1]))
+                print(f'Read {l[0]} {images[-1].shape} with focal length {focal_length[-1]}')
     return images, focal_length
 
 def cylindrical_projection(img, f):
@@ -29,19 +29,19 @@ def cylindrical_projection(img, f):
             if x_ >= 0 and x_ < w and y_ >= 0 and y_ < h:
                 projection[y_][x_] = img[y + int(h/2)][x + int(w/2)]
 
-    _, thresh = cv2.threshold(cv2.cvtColor(projection, cv2.COLOR_BGR2GRAY), 1, 255, cv2.THRESH_BINARY)
-    contours, _ = cv2.findContours(thresh, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-    x, y, w, h = cv2.boundingRect(contours[0])
-        
-    return projection[y:y+h, x:x+w]
-    # return projection
+    return projection
 
-def RANSEC(matched_pairs, k=20, threshold=40):
+def RANSEC(matched_pairs, k=20, threshold=40, n=2):
     best_offset = None
-    max_c = 0
+    max_c = -1
+    matched_pairs = matched_pairs.tolist()
     for _k in range(k):
-        x1, y1, x2, y2 = random.choice(matched_pairs)
-        offset = np.array([x2-x1, y2-y1])
+        assert len(matched_pairs) > n
+        offset = np.array([0, 0])
+        sampled_pairs = random.sample(matched_pairs, n)
+        for x1, y1, x2, y2 in sampled_pairs:
+            offset += np.array([x2 - x1, y2 - y1])
+        offset = offset // n
         c = 0
         for pair in matched_pairs:
             diff = np.array([pair[0], pair[1]]) + offset - np.array([pair[2], pair[3]])
@@ -62,7 +62,7 @@ def merge_two_image(img1, img2, offset):
     sx = 0 if offset[1] > 0 else -offset[1]
     merged_img[sy:sy+h2,sx:sx+w2] = img2
 
-    sy = 0 if offset[0] < 0 else h2 + offset[0] - h
+    sy = 0 if offset[0] < 0 else offset[0]
     sx = 0 if offset[1] < 0 else offset[1]
     merged_img[sy:sy+h,sx:sx+w] = img1
 
@@ -79,7 +79,10 @@ def merge_two_image(img1, img2, offset):
                     gamma = jj/(w+offset[1])
                 i1 = ii
                 i2 = ii + offset[0]
-                merged_img[i][j] = (1 - gamma) * img1[i1][-offset[1] + jj] + gamma * img2[i2][jj]
+                try:
+                    merged_img[i][j] = (1 - gamma) * img1[i1][-offset[1] + jj] + gamma * img2[i2][jj]
+                except:
+                    pass
     else:
         for ii, i in enumerate(range(-offset[0], h)):
             for jj, j in enumerate(range(-offset[1], w)):
@@ -91,7 +94,10 @@ def merge_two_image(img1, img2, offset):
                     gamma = jj/(w+offset[1])
                 i1 = ii - offset[0]
                 i2 = ii
-                merged_img[i][j] = (1 - gamma) * img1[i1][-offset[1] + jj] + gamma * img2[i2][jj]
+                try:
+                    merged_img[i][j] = (1 - gamma) * img1[i1][-offset[1] + jj] + gamma * img2[i2][jj]
+                except:
+                    pass
 
     return merged_img
 
