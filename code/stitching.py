@@ -101,3 +101,23 @@ def merge_two_image(img1, img2, offset):
 
     return merged_img
 
+def end_to_end_align(img, offset_y):
+    aligned_img = img.copy()
+    offset = np.linspace(-offset_y, 0, num=img.shape[1], dtype=np.uint16)
+    for j in range(img.shape[1]):
+        aligned_img[:,j] = np.roll(img[:,j], offset[j], axis=0)
+    return aligned_img
+
+def auto_crop(img):
+    threshold = img.shape[1] // 4
+    y1, y2 = 0, img.shape[0] - 1
+    for i in range(img.shape[0]):
+        if len(np.where(img[i] == [0, 0, 0])[0]) < threshold:
+            y1 = i
+            break
+    for i in range(img.shape[0]-1, -1, -1):
+        if len(np.where(img[i] == [0, 0, 0])[0]) < threshold:
+            y2 = i
+            break
+    return img[y1:y2]
+
