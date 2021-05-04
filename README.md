@@ -18,11 +18,11 @@ And run the program:
 `usage: main.py [-h] file_list output_image`
 
 ```
-$ python3 code/main.py list.txt output.jpg
+$ python3 code/main.py list.txt output.png
 ```
 
-Example
+Example to generate result.png
 
 ```
-$ python3 code/main.py image_lists/parrington.txt output.jpg
+$ python3 code/main.py image_lists/test4.txt result.png
 ```
