@@ -31,7 +31,7 @@ def cylindrical_projection(img, f):
 
     return projection
 
-def RANSEC(matched_pairs, k=100, threshold=20, n=2):
+def RANSEC(matched_pairs, k=100, threshold=20, n=1):
     best_offset = None
     max_c = -1
     matched_pairs = matched_pairs.tolist()
@@ -76,7 +76,8 @@ def merge_two_image(img1, img2, offset):
                 elif jj > gg * 2:
                     gamma = 1
                 else:
-                    gamma = jj/(w+offset[1])
+                    gamma = 3 * jj / (w + offset[1]) - 1
+                # gamma = jj/(w+offset[1])
                 i1 = ii
                 i2 = ii + offset[0]
                 try:
@@ -91,7 +92,8 @@ def merge_two_image(img1, img2, offset):
                 elif jj > gg * 2:
                     gamma = 1
                 else:
-                    gamma = jj/(w+offset[1])
+                    gamma = 3 * jj / (w + offset[1]) - 1
+                # gamma = jj/(w+offset[1])
                 i1 = ii - offset[0]
                 i2 = ii
                 try:
