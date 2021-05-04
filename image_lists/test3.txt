@@ -1,0 +1,12 @@
+test_data/test3/DSC07325.JPG 1159
+test_data/test3/DSC07326.JPG 1159
+test_data/test3/DSC07327.JPG 1159
+test_data/test3/DSC07328.JPG 1159
+test_data/test3/DSC07329.JPG 1159
+test_data/test3/DSC07330.JPG 1159
+test_data/test3/DSC07331.JPG 1159
+test_data/test3/DSC07332.JPG 1159
+test_data/test3/DSC07333.JPG 1159
+test_data/test3/DSC07334.JPG 1159
+test_data/test3/DSC07335.JPG 1159
+test_data/test3/DSC07336.JPG 1159

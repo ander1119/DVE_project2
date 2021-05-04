@@ -31,7 +31,7 @@ def cylindrical_projection(img, f):
 
     return projection
 
-def RANSEC(matched_pairs, k=20, threshold=40, n=2):
+def RANSEC(matched_pairs, k=100, threshold=20, n=2):
     best_offset = None
     max_c = -1
     matched_pairs = matched_pairs.tolist()
