@@ -3,6 +3,12 @@
 
 ### Usage
 
+Install dependencies:
+
+```
+$ python3 -m pip install -r requirements.txt
+```
+
 First create the image list as the following format:
 
 ```
