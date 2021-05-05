@@ -30,5 +30,5 @@ if __name__ == '__main__':
 
     result_image = stitching.end_to_end_align(result_image, offset_y)
     result_image = stitching.auto_crop(result_image)
-    
+
     cv2.imwrite(args.output_image, result_image)
